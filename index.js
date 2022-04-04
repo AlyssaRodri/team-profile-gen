@@ -1,3 +1,5 @@
+const Employee = require("./lib/employee")
+const Inquirer = require("inquirer")
 /*
 GIVEN a command-line application that accepts user input
 WHEN I am prompted for my team members and their information
@@ -18,11 +20,8 @@ WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 */
 
-//Parent class of Employee that holds these variables
-// `name`
-// * `id`
-// * `email`
-// * `getName()`
-// * `getId()`
-// * `getEmail()`
-// * `getRole()`&mdash;returns `'Employee'`
+//Initialize a new   Employee Object
+const employee = new Employee ()
+
+//Call employee method
+
