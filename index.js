@@ -15,7 +15,7 @@ const init = () => {
     //The first question I will ask is for the type of employee on a team
     inquirer.prompt([
         {
-            type: "List",
+            type: "list",
             name: "employeeRole",
             message: "What is your employee's role?",
             choices: ["Engineer", "Intern", "Manager", "I have no more employee's to add."]
@@ -71,8 +71,8 @@ const engineerQuestions = () => {
         if ( response.moreEmployee === true){
             init()
         } else {
-            createPage()
-        }
+            generateHTML()
+        } 
     })
 }
 
@@ -110,11 +110,13 @@ const internQuestions = () => {
         
         teamMembers.push(int)
 
+        console.log(teamMembers)
+
         if (response.moreEmployee === true){
             init()
         } else {
-            createPage()
-        }
+            generateHTML()
+        } 
     })
 }
 
@@ -155,15 +157,15 @@ const managerQuestions = () => {
         if (response.moreEmployee === true){
             init()
         } else {
-            createPage()
-        }
+            generateHTML()
+        } 
 
     })
 }
 
 // Lastly, create the page!
 
-const createPage = () => {
+const createPage = ({teamMembers}) =>
     `
     <!doctype html>
 <html lang="en">
@@ -180,7 +182,7 @@ const createPage = () => {
   <body>
     <h1>Meet The Team! </h1>
 
-    ${teamMembers}
+    ${teamMembers.htmlCode()}
 
     
     <!-- Optional JavaScript -->
@@ -191,6 +193,11 @@ const createPage = () => {
   </body>
 </html>
     `
+
+
+const generateHTML = () =>{
+    
 }
 
 
+init()
