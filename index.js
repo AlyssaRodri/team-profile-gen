@@ -7,27 +7,7 @@ const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
 const inquirer = require("inquirer");
-
-
-/*
-GIVEN a command-line application that accepts user input
-WHEN I am prompted for my team members and their information
-THEN an HTML file is generated that displays a nicely formatted team roster based on user input
-WHEN I click on an email address in the HTML
-THEN my default email program opens and populates the TO field of the email with the address
-WHEN I click on the GitHub username
-THEN that GitHub profile opens in a new tab
-WHEN I start the application
-THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
-WHEN I enter the team manager’s name, employee ID, email address, and office number
-THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
-WHEN I select the engineer option
-THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-WHEN I select the intern option
-THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-WHEN I decide to finish building my team
-THEN I exit the application, and the HTML is generated
-*/
+let teamMembers = []
 
 // Here I create a function that will start the code
 const init = () => {
@@ -86,6 +66,8 @@ const engineerQuestions = () => {
     ]) .then ( response => {
         const eng = new Engineer( response.name, response.ID, response.email, response.github)
 
+        teamMembers.push(eng)
+
         if ( response.moreEmployee === true){
             init()
         } else {
@@ -125,6 +107,8 @@ const internQuestions = () => {
         }
     ]) .then( response => {
         const int = new Intern( response.name, response.ID, response.email, response.school )
+        
+        teamMembers.push(int)
 
         if (response.moreEmployee === true){
             init()
@@ -166,6 +150,8 @@ const managerQuestions = () => {
     ]) .then( response =>{
         const man = new Manager(response.name, response.ID, response.email, response.officeNum )
 
+        teamMembers.push(man)
+
         if (response.moreEmployee === true){
             init()
         } else {
@@ -174,4 +160,37 @@ const managerQuestions = () => {
 
     })
 }
+
+// Lastly, create the page!
+
+const createPage = () => {
+    `
+    <!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <title>Profile Generator</title>
+  </head>
+  <body>
+    <h1>Meet The Team! </h1>
+
+    ${teamMembers}
+
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+    `
+}
+
 
