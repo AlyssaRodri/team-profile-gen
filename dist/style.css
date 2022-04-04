@@ -1,0 +1,18 @@
+:root {
+    --bg-color: #eae0d5;
+    --txt-color: #0a0908;
+}
+
+h1 {
+    justify-content: center;
+    display: flex;
+    padding: 2%;
+}
+
+.card{
+    display: flex;
+    border: .25rem solid #22333b;
+    justify-content: space-between;
+    margin: 1%;
+    align-content: center;
+}
