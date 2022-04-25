@@ -7,6 +7,7 @@ const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
 const inquirer = require("inquirer");
+
 let teamMembers = []
 
 // Here I create a function that will start the code
@@ -20,17 +21,17 @@ const init = () => {
             message: "What is your employee's role?",
             choices: ["Engineer", "Intern", "Manager", "I have no more employee's to add."]
         }
-    ]) .then( response => {
+    ]).then(response => {
         // Given the users response I will pick the kind of questions the User will be asked
-            if ( response.employeeRole === "Engineer"){
-                engineerQuestions()
-            } else if ( response.employeeRole === "Intern"){
-                internQuestions()
-            } else if ( response.employeeRole === "Manager"){
-                managerQuestions()
-            } else {
-                createPage()
-            }
+        if (response.employeeRole === "Engineer") {
+            engineerQuestions()
+        } else if (response.employeeRole === "Intern") {
+            internQuestions()
+        } else if (response.employeeRole === "Manager") {
+            managerQuestions()
+        } else {
+            createPage()
+        }
     })
 }
 
@@ -63,16 +64,16 @@ const engineerQuestions = () => {
             name: "moreEmployee",
             message: "Would you like to add another employee?"
         }
-    ]) .then ( response => {
-        const eng = new Engineer( response.name, response.ID, response.email, response.github)
+    ]).then(response => {
+        const eng = new Engineer(response.name, response.ID, response.email, response.github)
 
         teamMembers.push(eng)
 
-        if ( response.moreEmployee === true){
+        if (response.moreEmployee === true) {
             init()
         } else {
             generateHTML()
-        } 
+        }
     })
 }
 
@@ -105,18 +106,18 @@ const internQuestions = () => {
             name: "moreEmployee",
             message: "Would you like to add another employee?"
         }
-    ]) .then( response => {
-        const int = new Intern( response.name, response.ID, response.email, response.school )
-        
+    ]).then(response => {
+        const int = new Intern(response.name, response.ID, response.email, response.school)
+
         teamMembers.push(int)
 
         console.log(teamMembers)
 
-        if (response.moreEmployee === true){
+        if (response.moreEmployee === true) {
             init()
         } else {
             generateHTML()
-        } 
+        }
     })
 }
 
@@ -149,54 +150,63 @@ const managerQuestions = () => {
             name: "moreEmployee",
             message: "Would you like to add another employee?"
         }
-    ]) .then( response =>{
-        const man = new Manager(response.name, response.ID, response.email, response.officeNum )
+    ]).then(response => {
+        const man = new Manager(response.name, response.ID, response.email, response.officeNum)
 
         teamMembers.push(man)
-
-        if (response.moreEmployee === true){
+        // console.log(teamMembers)
+        if (response.moreEmployee === true) {
             init()
         } else {
-            generateHTML()
-        } 
+            fs.writeFile("./dist/index.html", generateHTML(teamMembers), err => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        }
 
     })
 }
 
 // Lastly, create the page!
 
-const createPage = ({teamMembers}) =>
-    `
-    <!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style.css">
-    <title>Profile Generator</title>
-  </head>
-  <body>
-    <h1>Meet The Team! </h1>
-
-    ${teamMembers.htmlCode()}
-
+const generateHTML = (teamMembers) => {
+    let data = ""
+    console.log(teamMembers)
+    for (var i=0; i < teamMembers.length; i++){
+        data += teamMembers[i].htmlCode()
+    }
+    console.log(data)
+    return `
+        <!doctype html>
+        <html lang="en">
+        <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-</html>
-    `
-
-
-const generateHTML = () =>{
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./style.css">
+        <title>Profile Generator</title>
+      </head>
+      <body>
+        <h1>Meet The Team! </h1>
     
+        ${data}
+    
+        
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      </body>
+    </html>
+        `
+
 }
 
 
