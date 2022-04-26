@@ -26,8 +26,7 @@
 
  ## Contributions
 
- 
-
+ In this project I used Node.js, Inquirer, and Jest. I also was helped by my tutor, David Johnson, and one of my classmates, Craig Leslie.
 
  ## Tests
 
