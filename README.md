@@ -22,7 +22,7 @@
 
  ## My Work
 
- Please view my work [here](https://drive.google.com/file/d/1fYwYyM3Wxp93Cla-iBzUuC0bSt3wEjiJ/view)
+ [My youtube video demonstrating team profile generator project.](https://youtu.be/Cjvgs9xC1Gw)
 
  ## Contributions
 
