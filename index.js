@@ -111,8 +111,6 @@ const internQuestions = () => {
 
         teamMembers.push(int)
 
-        console.log(teamMembers)
-
         if (response.moreEmployee === true) {
             init()
         } else {

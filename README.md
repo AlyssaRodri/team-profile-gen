@@ -22,11 +22,11 @@
 
  ## My Work
 
-Please view my work [here](https://drive.google.com/file/d/1fYwYyM3Wxp93Cla-iBzUuC0bSt3wEjiJ/view)
+ Please view my work [here](https://drive.google.com/file/d/1fYwYyM3Wxp93Cla-iBzUuC0bSt3wEjiJ/view)
 
  ## Contributions
 
- The biggest resource that I used for the file, was the help of my classmates. Specifically, Craig Leslie.
+ 
 
 
  ## Tests
